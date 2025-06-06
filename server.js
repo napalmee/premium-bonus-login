@@ -9,9 +9,12 @@ const cookieParser = require('cookie-parser');
 const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
-// Разрешаем CORS для всех (можно ограничить только Тильдой)
+
+// Вставь сюда URL своего фронтенда, например: 'https://your-frontend-domain.com' или 'http://localhost:3000'
+const FRONTEND_URL = 'https://loginpilsner.tilda.ws/';
+
 app.use(cors({
-    origin: '*', // или '*' для теста
+    origin: FRONTEND_URL,
     credentials: true // чтобы JWT cookie передавалась
 }));
 
@@ -35,13 +38,6 @@ const authenticate = (req, res, next) => {
         return res.status(401).json({ success: false, message: 'Недействительный токен' });
     }
 };
-
-// Разрешаем CORS для всех (можно ограничить только Тильдой)
-app.use(cors({
-    origin: '*', // или '*' для теста
-    credentials: true // чтобы JWT cookie передавалась
-}));
-
 
 app.post('/api/login-start', async (req, res) => {
     const { phone } = req.body;
@@ -126,3 +122,4 @@ app.get('/api/user-info', authenticate, async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
