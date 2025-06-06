@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Вставь сюда URL своего фронтенда, например: 'https://your-frontend-domain.com' или 'http://localhost:3000'
-const FRONTEND_URL = 'https://loginpilsner.tilda.ws/';
+const FRONTEND_URL = 'https://loginpilsner.tilda.ws';
 
 app.use(cors({
     origin: FRONTEND_URL,
