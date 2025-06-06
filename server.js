@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
@@ -29,6 +30,13 @@ const authenticate = (req, res, next) => {
         return res.status(401).json({ success: false, message: 'Недействительный токен' });
     }
 };
+
+// Разрешаем CORS для всех (можно ограничить только Тильдой)
+app.use(cors({
+    origin: '*', // или '*' для теста
+    credentials: true // чтобы JWT cookie передавалась
+}));
+
 
 app.post('/api/login-start', async (req, res) => {
     const { phone } = req.body;
