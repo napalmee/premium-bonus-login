@@ -9,6 +9,11 @@ const cookieParser = require('cookie-parser');
 const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
+// Разрешаем CORS для всех (можно ограничить только Тильдой)
+app.use(cors({
+    origin: '*', // или '*' для теста
+    credentials: true // чтобы JWT cookie передавалась
+}));
 
 const API_URL = process.env.API_URL;
 const API_TOKEN = process.env.API_TOKEN;
