@@ -17,7 +17,7 @@ const JWT_EXPIRES_IN = '1h';
 
 // Middlewares
 app.use(cors({
-    origin: 'http://loginpilsner.tilda.ws/', // ВАЖНО: сюда твой сайт Тильды
+    origin: 'http://loginpilsner.tilda.ws', // ВАЖНО: сюда твой сайт Тильды
     credentials: true
 }));
 
