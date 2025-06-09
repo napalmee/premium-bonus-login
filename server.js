@@ -105,7 +105,7 @@ app.post('/api/login-verify', async (req, res) => {
 });
 
 app.get('/api/user-info', authenticate, async (req, res) => {
-    const phone = req.user.phone;
+    const phone = req.user.phone; // Берем phone из JWT
 
     try {
         const userInfo = await axios.post(`${API_URL}/buyer-info-detail`,
@@ -120,6 +120,33 @@ app.get('/api/user-info', authenticate, async (req, res) => {
         res.status(500).json({ success: false, message: 'Ошибка получения данных' });
     }
 });
+
+app.post('/api/qr-generate', authenticate, async (req, res) => {
+    const phone = req.user.phone; // Берем phone из JWT
+
+    try {
+        const qrResp = await axios.post(`${API_URL}/qr-generate`,
+            { phone: phone, ttl: 120 },
+            { headers: { Authorization: API_TOKEN, Accept: 'application/json' } }
+        );
+
+        res.json(qrResp.data);
+
+    } catch (err) {
+        console.error(err.response?.data || err.message);
+        res.status(500).json({ success: false, message: 'Ошибка генерации QR' });
+    }
+});
+
+app.post('/api/logout', (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'Lax'
+    });
+    res.json({ success: true, message: 'Вы вышли из системы' });
+});
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
