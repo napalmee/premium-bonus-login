@@ -127,14 +127,12 @@ app.get('/api/user-info', authenticate, async (req, res) => {
     }
 });
 
-// 4️⃣ qr-generate
 app.post('/api/generate_order_code', authenticate, async (req, res) => {
     const phone = req.user.phone;
 
     try {
-        const qrResp = await axios.post(`${API_URL}/generate_order_code`, {
-            phone: phone,
-            ttl: 120
+        const qrResp = await axios.post(`${API_URL}/generate-order-code`, {
+            phone: phone
         }, {
             headers: {
                 Authorization: API_TOKEN,
@@ -146,9 +144,10 @@ app.post('/api/generate_order_code', authenticate, async (req, res) => {
 
     } catch (err) {
         console.error(err.response?.data || err.message);
-        res.status(500).json({ success: false, message: 'Ошибка генерации QR' });
+        res.status(500).json({ success: false, message: 'Ошибка генерации order code' });
     }
 });
+
 
 // 5️⃣ logout
 app.post('/api/logout', (req, res) => {
