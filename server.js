@@ -128,11 +128,11 @@ app.get('/api/user-info', authenticate, async (req, res) => {
 });
 
 // 4️⃣ qr-generate
-app.post('/api/qr-generate', authenticate, async (req, res) => {
+app.post('/api/generate_order_code', authenticate, async (req, res) => {
     const phone = req.user.phone;
 
     try {
-        const qrResp = await axios.post(`${API_URL}/qr-generate`, {
+        const qrResp = await axios.post(`${API_URL}/generate_order_code`, {
             phone: phone,
             ttl: 120
         }, {
