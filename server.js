@@ -18,6 +18,14 @@ app.use(cors({
     credentials: true // чтобы JWT cookie передавалась
 }));
 
+res.cookie('token', token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None',
+    maxAge: 3600000
+});
+
+
 const API_URL = process.env.API_URL;
 const API_TOKEN = process.env.API_TOKEN;
 const JWT_SECRET = process.env.JWT_SECRET;
